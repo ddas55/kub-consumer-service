@@ -117,3 +117,10 @@ Check if ingress started , command: kubectl get ingresses
                 backend:
                   serviceName: svc-consumer-service
                   servicePort: 8090
+                  
+Step-6 , Testing the service                                      
+Verify if service started for local cluster (minikube) , command : minikube service svc-consumer-service              
+Testing URL with NodePort                                                              
+http://192.168.99.100:31001/svcone/hello/hw                                                           
+Testing URL with Ingress                                                                          
+https://192.168.99.100/svcone/hello/hw

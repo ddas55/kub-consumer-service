@@ -78,3 +78,41 @@ Command: k create -f /path/to/kub-consumer-service-dp.yaml
               items:
               - key: application.properties 
                 path: application.properties
+
+Step-5                                              
+Start service and Ingress
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: svc-consumer-service
+      labels:
+        app: pod-consumer-service
+        env: dev
+    spec:
+      selector:
+        app: pod-consumer-service
+        env: dev
+      type: NodePort
+      ports:
+      - name: http
+        port: 8090
+        targetPort: 8090
+        nodePort: 31001
+      - name: https
+        port: 443
+        targetPort: 8443
+        nodePort: 31002
+        ---
+        apiVersion: extensions/v1beta1
+        kind: Ingress
+        metadata:
+          name: ing-consumer-service
+        spec:
+          rules:
+          - http: 
+             paths:
+              - path: /svcone
+                backend:
+                  serviceName: svc-consumer-service
+                  servicePort: 8090

@@ -124,3 +124,10 @@ Testing URL with NodePort
 http://192.168.99.100:31001/svcone/hello/hw                                                           
 Testing URL with Ingress                                                                          
 https://192.168.99.100/svcone/hello/hw
+
+Step-7 , horizontal Scale UP or Down                                                                     
+Command: kubectl scale deployment dp-consumer-service --replicas=3           
+
+Step-8 , Rolling Update                                       
+Command: kubectl set image deployment dp-consumer-service cont-consumer-service=ddas55/kub-consumer-service:new version
+

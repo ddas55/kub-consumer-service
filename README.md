@@ -23,65 +23,58 @@ Step-4
 Start service deployment from kub-consumer-service-dp.yaml                                               
 Command: k create -f /path/to/kub-consumer-service-dp.yaml
 
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: dp-consumer-service
-spec:
-  replicas: 1
-  selector:
-   matchLabels:
-    app: pod-consumer-service
-    env: dev
-  template:
+    apiVersion: apps/v1beta1
+    kind: Deployment
     metadata:
-      labels:
+      name: dp-consumer-service
+    spec:
+      replicas: 1
+      selector:
+       matchLabels:
         app: pod-consumer-service
         env: dev
-    spec:
-      containers:
-      - name: cont-consumer-service
-        image: ddas55/kub-consumer-service
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8090
-          protocol: TCP
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        volumeMounts:
-        - name: vm-consumer-service
-          mountPath: "/config/" 
-          readOnly: true
-        livenessProbe:
-          httpGet:
-            path: /svcone/hello/healthz
-            port: 8090
-            httpHeaders:
-             - name: X-Custom-Header
-               value: Awesome
-          initialDelaySeconds: 30
-          periodSeconds: 15
-        readinessProbe:
-          httpGet:
-            path: /svcone/hello/rediness
-            port: 8090
-            httpHeaders:
-             - name: X-Custom-Header
-               value: Awesome
-          initialDelaySeconds: 5
-
-      volumes:
-      - name: vm-consumer-service
-        configMap:
-          name: cm-consumer-service
-          items:
-          - key: application.properties 
-            path: application.properties
-
-
-
-
-
-
+      template:
+        metadata:
+          labels:
+            app: pod-consumer-service
+            env: dev
+        spec:
+          containers:
+          - name: cont-consumer-service
+            image: ddas55/kub-consumer-service
+            imagePullPolicy: Always
+            ports:
+            - containerPort: 8090
+              protocol: TCP
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+            volumeMounts:
+            - name: vm-consumer-service
+              mountPath: "/config/" 
+              readOnly: true
+            livenessProbe:
+              httpGet:
+                path: /svcone/hello/healthz
+                port: 8090
+                httpHeaders:
+                 - name: X-Custom-Header
+                   value: Awesome
+              initialDelaySeconds: 30
+              periodSeconds: 15
+            readinessProbe:
+              httpGet:
+                path: /svcone/hello/rediness
+                port: 8090
+                httpHeaders:
+                 - name: X-Custom-Header
+                   value: Awesome
+              initialDelaySeconds: 5
+          volumes:
+          - name: vm-consumer-service
+            configMap:
+              name: cm-consumer-service
+              items:
+              - key: application.properties 
+                path: application.properties

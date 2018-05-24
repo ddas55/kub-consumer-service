@@ -131,3 +131,27 @@ Command: kubectl scale deployment dp-consumer-service --replicas=3
 Step-8 , Rolling Update                                       
 Command: kubectl set image deployment dp-consumer-service cont-consumer-service=ddas55/kub-consumer-service:new version
 
+Step-9 , Automatic Scaling                                              
+Before running auto scale ,check if heapster is running in minikube                                                
+Command:minikube addons list                                           
+Command:minikube addons enable heapster                                               
+
+Check how much cpu and memory used by node                                                                              
+kubectl top node                                      
+kubectl top pod                                                              
+
+Downsize the CPU to test the autoscale , cpu around 10% , if container CPU reached around 10% , new container will be added. 
+kubectl autoscale deployment dp-consumer-service --cpu-percent=10 --min=1 --max=3
+
+Get cpu% used by pod ( hpa - HorinzontalPod-Autoscaler)                                                                   
+kubectl get hpa
+
+Before hitting pod watch hpa and deployment                                                    
+command: watch -n 1 kubectl get hpa,deployment                                         
+
+Hit the service repeatedly , this will increase the load and bump the CPU                                 
+while true; do sleep 1; curl http://192.168.99.100/hw; echo -e '\n\n\n\n'$(date);done
+
+To Delete the HorinzontalPod-Autoscaler                                                              
+kubectl delete hpa dp-consumer-service
+

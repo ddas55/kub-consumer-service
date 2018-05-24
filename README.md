@@ -80,7 +80,8 @@ Command: k create -f /path/to/kub-consumer-service-dp.yaml
                 path: application.properties
 
 Step-5                                              
-Start service and Ingress
+Start service and Ingress                                   
+Check if ingress started , command: kubectl get ingresses
 
     apiVersion: v1
     kind: Service

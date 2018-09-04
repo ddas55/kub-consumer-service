@@ -2,7 +2,7 @@
 SpringBoot Micoservice Consumed Another Service with OAuth Run in K8s
 
 Step-1                                                                     
-Run the CI/CD Pipleline on Jenkins - kub_consumer_sevice_pipeline.This'll run three jobs.                       
+Run the CI/CD Pipleline on Jenkins - Pipeline_kub_consumer_sevice.This'll run three jobs.                       
 Job-1.Chekout From Github and create jar file.                                   
 Job-2.Create Docker Image by using Dockerfile and jar. This job also tag the Docker Image.                    
 Job-3.Push Docker Image to Docker Hub.
